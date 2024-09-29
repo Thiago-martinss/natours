@@ -10,7 +10,7 @@ const tourSchema = new mongoose.Schema({
       enum: ['easy', 'medium', 'hard'],
     },
     price: { type: Number, required: true },
-    description: { type: String, required: true },
+    description: { type: String },
     rating: { type: Number, default: 0 },
     ratingsQuantity: { type: Number, default: 0 },
     //images:  [String],
