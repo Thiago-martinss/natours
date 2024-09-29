@@ -8,7 +8,7 @@ const tourSchema = new mongoose.Schema({
     difficulty: {
       type: String,
       required: true,
-      enum: ['easy', 'medium', 'hard'],
+      //enum: ['easy', 'medium', 'hard'],
     },
     price: { type: Number, required: true },
     priceDiscount: { type: Number},
