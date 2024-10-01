@@ -19,7 +19,7 @@ const tourSchema = new mongoose.Schema({
     imageCover:  { type: String, required: true },
     images:  [String],
     guides: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-    createdAt: { type: Date, default: Date.now },
+    createdAt: { type: Date, default: Date.now, select: false },
     startDates: [Date],
   });
   
