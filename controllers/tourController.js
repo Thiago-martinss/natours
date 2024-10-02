@@ -1,7 +1,7 @@
 const Tour = require('./../models/tourModel');
 const APIFeatures = require('./../utils/apifeatures');
 
-export.aliasTopTours = (req, res, next) => {
+exports.aliasTopTours = (req, res, next) => {
  req.query.limit = '5';
  req.query.sort = '-ratingsAverage,price';
  req.query.fields = 'name,price,ratingsAverage,difficulty, summary';
@@ -135,7 +135,7 @@ exports.getTourStats = async (req, res) => {
   } 
 }
 
-exports.getMontlyPlan = async(req, res) => {
+exports.getMonthlyPlan = async(req, res) => {
   try {
     const year = parseInt(req.params.year);
     const plan = await Tour.aggregate([
