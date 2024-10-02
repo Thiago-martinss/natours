@@ -107,3 +107,75 @@ exports.deleteTour = async (req, res) => {
   }
  
 };
+
+exports.getTourStats = async (req, res) => {
+  try {
+    const stats = await Tour.aggregate([
+      {
+        $match: {ratingsAverage: {$gte: 4.5}}
+      },
+      {
+        $group: {
+          _id: null,
+          numTours: {$sum: 1},
+          numRatings: {$sum: '$ratingsQuantity'},
+          avgRating: {$avg: '$ratingsAverage'},
+          avgPrice: {$avg: '$price'},
+          minPrice: {$min: '$price'},
+          maxPrice: {$max: '$price'}
+        }
+      }
+      
+    ]);
+  } catch (e) {
+    res.status(500).json({
+      status: 'fail',
+      message: 'Failed to retrieve stats'
+    });  
+  } 
+}
+
+exports.getMontlyPlan = async(req, res) => {
+  try {
+    const year = parseInt(req.params.year);
+    const plan = await Tour.aggregate([
+      
+      {
+        unwind: '$startDates'
+      },
+      {
+        $match: {
+          startDates: {
+            $gte: new Date(`${year}-01-01`),
+            $lte: new Date(`${year}-12-31`)
+          }
+        }
+      },
+      {
+        $group: {
+          _id: {
+            month: {$month: '$startDates'}
+          },
+          numTours: {$sum: 1},
+          tours: {$push: 'name'}
+        }
+      },
+      {
+      $addFields: { month: '$_id' },
+      },
+      {
+        $project: {
+          _id: 0
+        }
+      },
+      {
+        $sort: { numTourStarts: -1 }
+      }
+    ]);
+  }catch(e) {
+    res.status(404).json({
+      status: 'fail',
+      message: 'No tours found for the given location and year'
+    });
+  }
+}
