@@ -4,41 +4,84 @@ const validator = require('validator');
 
 
 const tourSchema = new mongoose.Schema({
-    name: { type: String, required: true, unique: true, trim: true, maxlength:40, minlength:10 },
+    name: {
+      type: String,
+      required: [true, 'A tour must have a name'],
+      unique: true,
+      trim: true,
+      maxlength: [40, 'A tour name must have less or equal then 40 characters'],
+      minlength: [10, 'A tour name must have more or equal then 10 characters']
+      // validate: [validator.isAlpha, 'Tour name must only contain characters']
+    },
     slug: String,
-    startLocation: { type: String, required: true },
-    locations: [
-      {
-    duration: { type: Number, required: true },
-    maxGroupSize: { type: Number, required: true},
+    duration: {
+      type: Number,
+      required: [true, 'A tour must have a duration']
+    },
+    maxGroupSize: {
+      type: Number,
+      required: [true, 'A tour must have a group size']
+    },
     difficulty: {
       type: String,
-      required: true,
-      enum: ['easy', 'medium', 'hard'],
+      required: [true, 'A tour must have a difficulty'],
+      enum: {
+        values: ['easy', 'medium', 'hard'],
+        message: 'Difficulty is either: easy, medium, hard'
+      }
     },
-    price: { type: Number, required: true },
-    priceDiscount: { type: Number,
+    ratingsAverage: {
+      type: Number,
+      default: 4.5,
+      min: [1, 'Rating must be above 1.0'],
+      max: [5, 'Rating must be below 5.0']
+    },
+    ratingsQuantity: {
+      type: Number,
+      default: 0
+    },
+    price: {
+      type: Number,
+      required: [true, 'A tour must have a price']
+    },
+    priceDiscount: {
+      type: Number,
       validate: {
         validator: function(val) {
-        // this only points to current doc on NEW document creation
-        return val < this.price
-      },
-      message:'Discount price ({VALUE}) should be below the regular price'
+          // this only points to current doc on NEW document creation
+          return val < this.price;
+        },
+        message: 'Discount price ({VALUE}) should be below regular price'
+      }
     },
-    summary: { type: String, trim: true, required: true },
-    description: { type: String, trim: true },
-    ratingsAverage: { type: Number, default: 5},
-    ratingsQuantity: { type: Number, default: 0 },
-    imageCover:  { type: String, required: true },
-    images:  [String],
-    guides: [{ type: mongoose.Schema.ObjectId, ref: 'User' }],
-    createdAt: { type: Date, default: Date.now, select: false },
+    summary: {
+      type: String,
+      trim: true,
+      required: [true, 'A tour must have a description']
+    },
+    description: {
+      type: String,
+      trim: true
+    },
+    imageCover: {
+      type: String,
+      required: [true, 'A tour must have a cover image']
+    },
+    images: [String],
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+      select: false
+    },
     startDates: [Date],
-    secretTour: { type: Boolean, default: false}
-  }, 
+    secretTour: {
+      type: Boolean,
+      default: false
+    }
+  },
   {
     toJSON: { virtuals: true },
-    toObject: { virtuals: true },
+    toObject: { virtuals: true }
   }
 );
 
