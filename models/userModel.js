@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
         required: [true, 'User must have an email'],
         unique: true,
         lowercase: true,
-        validate: [validateEmail, 'Please enter a valid email address']
+        validate: [validator.isEmail, 'Please enter a valid email address']
     },
     password: {
         type: String,
@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     passwordConfirm: {
         type: String,
         required: [true, 'Please confirm your password'],
-        validate: [validatePasswordConfirm, 'Passwords do not match']
+        //validate: [validatPasswordConfirm, 'Passwords do not match']
     },
     photo: {
         type: String
