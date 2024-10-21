@@ -37,6 +37,11 @@ const userSchema = new mongoose.Schema({
     photo: {
         type: String
     },
+    role: {
+      type: String,
+      enum: ['user', 'guide', 'lead-guide', 'admin'],
+      default: 'user'
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -73,9 +78,10 @@ userSchema.methods.correctPassword = async function(
         return JWTTimestamp < changedTimestamp;
     }
 
-    }
+    
     return false;
   }
+
   
 
 const User = mongoose.model('User', userSchema);
