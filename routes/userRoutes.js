@@ -21,6 +21,10 @@ router.patch('/updateMe',
   userController.updateMe
 );
 
+router.delete('/deleteMe', 
+  authController.protect, 
+  userController.deleteMe
+);
 
 
 router
