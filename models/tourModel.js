@@ -24,10 +24,10 @@ const tourSchema = new mongoose.Schema(
     },
     difficulty: {
       type: String,
-      required: [true, 'A tour must have a difficulty'],
+      required: [true, 'A tour must have a difficult'],
       enum: {
-        values: ['easy', 'medium', 'hard'],
-        message: 'Difficulty is either: easy, medium, hard'
+        values: ['easy', 'medium', 'difficult'],
+        message: 'Difficulty is either: easy, medium, difficult'
       }
     },
     ratingsAverage: {
@@ -77,7 +77,35 @@ const tourSchema = new mongoose.Schema(
     secretTour: {
       type: Boolean,
       default: false
-    }
+    },
+    startLocation: {
+      // GeoJSON
+        type: {
+          type: String,
+          default: 'Point',
+          enum: ['Point']
+        },
+        coordinates: [Number],
+        address: String,
+        description: String
+      },
+      locations: [
+        {
+          name: String,
+          description: String,
+          location: {
+            type: {
+              type: String,
+              default: 'Point',
+              enum: ['Point']
+            },
+            coordinates: [Number],
+            address: String,
+            description: String,
+            day: Number
+          }
+        }
+      ]    
   },
   {
     toJSON: { virtuals: true },
