@@ -105,7 +105,16 @@ const tourSchema = new mongoose.Schema(
             day: Number
           }
         }
-      ]    
+      ],
+      guides: [
+        {
+          type: mongoose.Schema.ObjectId,
+          ref: 'User',
+          required: true
+        }
+      ]
+        
+      
   },
   {
     toJSON: { virtuals: true },
@@ -122,6 +131,8 @@ tourSchema.pre('save', function(next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
+
+
 
 // tourSchema.pre('save', function(next) {
 //   console.log('Will save document...');
