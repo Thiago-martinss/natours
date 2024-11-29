@@ -54,12 +54,15 @@ userSchema.pre('save', async function(next) {
 
   // Hash the password with cost of 12
   this.password = await bcrypt.hash(this.password, 12);
+
   // Delete passwordConfirm field
   this.passwordConfirm = undefined;
   next();
 });
+
 userSchema.pre('save', function(next) {
   if (!this.isModified('password') || this.isNew) return next();
+
   this.passwordChangedAt = Date.now() - 1000;
   next();
 });
