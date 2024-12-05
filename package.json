@@ -7,8 +7,8 @@
     "start": "SET NODE_ENV=development&&nodemon server.js",
     "start:prod": "NODE_ENV=production node --watch server.js",
     "debug": "ndb server.js",
-        "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js",
-    "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js"
+       "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js",
+       "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js"
   },
   "author": "Thiago",
   "license": "ISC",
