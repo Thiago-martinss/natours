@@ -29,6 +29,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.1",
     "nodemailer": "^6.9.15",
+    "nodemailer-brevo-transport": "^2.1.0",
     "pug": "^3.0.3",
     "save-dev": "^0.0.1-security",
     "sharp": "^0.33.5",
