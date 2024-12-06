@@ -49,6 +49,7 @@ const upload = multer({
 
 exports.uploadUserPhoto = upload.single('photo');
 
+/*
 exports.deleteUserPhoto = catchAsync(async (req, res, next) => {
   if (!req.user.photo) return next();
   const user = await User.findByIdAndUpdate(req.user.id, { photo: '' }, { new: true });
@@ -57,6 +58,7 @@ exports.deleteUserPhoto = catchAsync(async (req, res, next) => {
     data: user
   });
 });
+*/
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
