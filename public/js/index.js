@@ -33,9 +33,10 @@ if (userDataForm)
   userDataForm.addEventListener('submit', e => {
     e.preventDefault();
     const form = new FormData();
-    form.append('name', document.getElementById('name').value)
-    form.append('email', document.getElementById('email').value)
-    form.append('photo', document.getElementById('photo').files[0])
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+    console.log(form);
 
     updateSettings(form, 'data');
   });
@@ -59,11 +60,9 @@ if (userPasswordForm)
     document.getElementById('password-confirm').value = '';
   });
 
-  if (bookBtn) {
-    bookBtn.addEventListener('click', async e => {
-      e.target.textContent = 'Processing...';
-      e.preventDefault();
-      const {tourId} = e.target.dataset;
-      await bookTour(tourId);
-    });
-  }
+if (bookBtn)
+  bookBtn.addEventListener('click', e => {
+    e.target.textContent = 'Processing...';
+    const { tourId } = e.target.dataset;
+    bookTour(tourId);
+  });

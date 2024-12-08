@@ -1,20 +1,18 @@
 extends base
-include _reviewcard
+include _reviewCard
 
 block append head
   script(src='https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.js')
   link(href='https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.css' rel='stylesheet')
 
-mixin overviewBox(label, text, icon) 
+mixin overviewBox(label, text, icon)
   .overview-box__detail
     svg.overview-box__icon
       use(xlink:href=`/img/icons.svg#icon-${icon}`)
     span.overview-box__label= label
     span.overview-box__text= text
 
-      
-
-block content 
+block content
   section.section-header
     .header__hero
       .header__hero-overlay &nbsp;
@@ -22,7 +20,7 @@ block content
 
     .heading-box
       h1.heading-primary
-        span= `${tour.name} Tour `
+        span= `${tour.name} tour`
       .heading-box__group
         .heading-box__detail
           svg.heading-box__icon
@@ -38,12 +36,12 @@ block content
       div
         .overview-box__group
           h2.heading-secondary.ma-bt-lg Quick facts
-          - const date = tour.startDates[0].toLocaleString('pt-BR', {month: 'long', year: 'numeric'})
 
+          - const date = tour.startDates[0].toLocaleString('en-us', {month: 'long', year: 'numeric'})
           +overviewBox('Next date', date, 'calendar')
           +overviewBox('Difficulty', tour.difficulty, 'trending-up')
           +overviewBox('Participants', `${tour.maxGroupSize} people`, 'user')
-          +overviewBox('Rating', `${tour.ratingsAverage} / 5 `, 'star')
+          +overviewBox('Rating', `${tour.ratingsAverage} / 5`, 'star')
 
         .overview-box__group
           h2.heading-secondary.ma-bt-lg Your tour guides
@@ -59,24 +57,24 @@ block content
               span.overview-box__text= guide.name
 
     .description-box
-      h2.heading-secondary.ma-bt-lg= `About ${tour.name} tour `
+      h2.heading-secondary.ma-bt-lg= `About ${tour.name} tour`
       - const parapraphs = tour.description.split('\n');
-      each paragraph in parapraphs
-        p.description__text= paragraph
+      each p in parapraphs
+        p.description__text= p
+
 
   section.section-pictures
     each img, i in tour.images
       .picture-box
-        img.picture-box__img(src=`/img/tours/${img}`, alt=`The Park Camper Tour ${i + 1}`,
-        class=`picture-box__img--${i + 1}`)
+        img.picture-box__img(src=`/img/tours/${img}`, alt=`The Park Camper Tour ${i + 1}`, class=`picture-box__img--${i + 1}`)
 
   section.section-map
     #map(data-locations=`${JSON.stringify(tour.locations)}`)
 
   section.section-reviews
     .reviews
-      each review in tour.reviews 
-       +reviewCard(review)
+      each review in tour.reviews
+        +reviewCard(review)
 
   section.section-cta
     .cta
@@ -87,8 +85,8 @@ block content
       .cta__content
         h2.heading-secondary What are you waiting for?
         p.cta__text= `${tour.duration} days. 1 adventure. Infinite memories. Make it yours today!`
-
+        
         if user
           button.btn.btn--green.span-all-rows#book-tour(data-tour-id=`${tour.id}`) Book tour now!
-        else 
-          button.btn.btn--green.span-all-rows(href='/login') Log in to book tour!
+        else
+          a.btn.btn--green.span-all-rows(href='/login') Log in to book tour
