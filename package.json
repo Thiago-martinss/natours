@@ -4,7 +4,8 @@
   "description": "Learning Node, express and MongoDB",
   "main": "app.js",
   "scripts": {
-    "start": "SET NODE_ENV=development&&nodemon server.js",
+    "start": "node server.js",
+    "dev": "SET NODE_ENV=development&&nodemon server.js",
     "start:prod": "NODE_ENV=production node --watch server.js",
     "debug": "ndb server.js",
     "watch:js": "parcel watch --no-hmr ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js",
@@ -43,5 +44,8 @@
   "devDependencies": {
     "ndb": "^1.1.5",
     "parcel-bundler": "^1.12.3"
+  },
+  "engines": {
+    "node": ">=14.x.x"
   }
 }
