@@ -8,7 +8,7 @@
     "start:prod": "NODE_ENV=production node --watch server.js",
     "debug": "ndb server.js",
     "watch:js": "parcel watch --no-hmr ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js",
-    "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js"
+    "build:js": "parcel build  ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js"
   },
   "author": "Thiago",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "@babel/polyfill": "^7.4.4",
     "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
+    "compression": "^1.7.5",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
