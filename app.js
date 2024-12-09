@@ -7,6 +7,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -24,9 +25,45 @@ app.set('views', path.join(__dirname, 'views'));
 // 1) GLOBAL MIDDLEWARES
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
-
+//app.use(cors());
+//app.options('*, cors()');
 // Set security HTTP headers
-app.use(helmet.crossOriginEmbedderPolicy({ policy: 'credentialless' }));
+const scriptSrcUrls = [
+  'https://unpkg.com/',
+  'https://tile.openstreetmap.org/',
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+  'https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js',
+  'http://localhost:3000/api/v1/users/login',
+  'https://cdnjs.cloudflare.com',
+  'https://js.stripe.com/v3/',
+  'https://js.stripe.com/',
+];
+const framesSrcUrls = ['https://js.stripe.com/'];
+const styleSrcUrls = [
+  'https://unpkg.com/',
+  'https://tile.openstreetmap.org/',
+  'https://fonts.googleapis.com/',
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+];
+const connectSrcUrls = [
+  'https://unpkg.com/',
+  'https://tile.openstreetmap.org/',
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+  'https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js',
+  'http://localhost:3000/api/v1/users/login',
+  'https://cdnjs.cloudflare.com',
+  'ws://localhost:56331/',
+  'https://js.stripe.com/v3/',
+  'https://js.stripe.com/',
+];
+const fontSrcUrls = ['fonts.googleapis.com', 'fonts.gstatic.com'];
+
+app.use(cors());
+app.options('*', cors());
+
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -85,7 +122,7 @@ if (process.env.NODE_ENV === 'development') {
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
-  message: 'Too many requests from this IP, please try again in an hour!'
+  message: 'Too many requests from this IP, please try again in an hour!',
 });
 app.use('/api', limiter);
 
@@ -109,8 +146,8 @@ app.use(
       'ratingsAverage',
       'maxGroupSize',
       'difficulty',
-      'price'
-    ]
+      'price',
+    ],
   })
 );
 
