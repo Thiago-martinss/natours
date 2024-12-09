@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Learning Node, express and MongoDB",
   "main": "app.js",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
     "start": "node server.js",
     "dev": "SET NODE_ENV=development&&nodemon server.js",
