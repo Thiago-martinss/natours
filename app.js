@@ -26,6 +26,8 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
+app.use(cors());
+app.options('*', cors());
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 //app.use(cors());
@@ -64,8 +66,7 @@ const connectSrcUrls = [
 ];
 const fontSrcUrls = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 
-app.use(cors());
-app.options('*', cors());
+
 
 app.use(
   helmet({

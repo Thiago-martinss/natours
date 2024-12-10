@@ -8438,26 +8438,28 @@ function () {
 
         case 4:
           session = _context.sent;
-          _context.next = 7;
-          return stripe.redirectToCheckout({
+          // 2) Create checkout form + charge credit card
+
+          /*
+          await stripe.redirectToCheckout({
             sessionId: session.data.session.id
           });
-
-        case 7:
-          _context.next = 13;
+          */
+          window.location.replace(session.data.session.url);
+          _context.next = 12;
           break;
 
-        case 9:
-          _context.prev = 9;
+        case 8:
+          _context.prev = 8;
           _context.t0 = _context["catch"](1);
           console.log(_context.t0);
           (0, _alerts.showAlert)('error', _context.t0);
 
-        case 13:
+        case 12:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[1, 9]]);
+    }, _callee, null, [[1, 8]]);
   }));
 
   return function bookTour(_x) {
